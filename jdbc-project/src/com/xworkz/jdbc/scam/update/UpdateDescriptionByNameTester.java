@@ -14,7 +14,7 @@ public class UpdateDescriptionByNameTester {
 
 		try (Connection connection = DriverManager.getConnection(url, userName, password)) {
 
-			String updateQuery = "update scam_table set s_description='medicines and animal husbandry equipment' where s_name=' Fodder scam'";
+			String updateQuery = "update scam_table set s_description='The theft spanned for many years, and allegedly involved numerous Bihar state's administrative and elected officials across multiple administrations of the Indian National Congress and the Janata Dal parties' where s_name=' Fodder scam'";
 			Statement statement = connection.createStatement();
 			statement.execute(updateQuery);
 		} catch (SQLException e) {
