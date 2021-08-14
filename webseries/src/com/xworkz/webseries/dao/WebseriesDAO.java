@@ -24,5 +24,5 @@ public interface WebseriesDAO {
 	
 	Optional<WebseriesDTO> findOne(Predicate<WebseriesDTO> predicate);
 	
-	//boolean saveAll(Collection<WebseriesDTO> collection);
+	void saveAll(Collection<WebseriesDTO> collection);
 }
