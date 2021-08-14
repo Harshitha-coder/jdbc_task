@@ -53,10 +53,9 @@ public class WebseriesTester {
 			System.out.println("found one by optional:" + temp);
 		}
 		
-		/*Collection<WebseriesDTO> collect= Arrays.asList(series1,series2,series3,series4);
-		boolean saveAll=dao.saveAll(collect);
-		System.out.println("saved all:"+saveAll);*/
-
+		Collection<WebseriesDTO> collect= Arrays.asList(series1,series2,series3,series4);
+		dao.saveAll(collect);
+		
 	}
 
 }

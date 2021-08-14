@@ -138,8 +138,8 @@ public class WebseriesDAOImpl implements WebseriesDAO {
 		String genre = result.getString("w_genre");
 		int yestAgeIndaNodbohudu = result.getInt("w_yestAgeIndaNodbohudu");
 
-		WebseriesDTO dto = new WebseriesDTO(name, episodes, season, StreamedIn.valueOf(streamed),
-				Genre.valueOf(genre), yestAgeIndaNodbohudu);
+		WebseriesDTO dto = new WebseriesDTO(name, episodes, season, StreamedIn.valueOf(streamed), Genre.valueOf(genre),
+				yestAgeIndaNodbohudu);
 		dto.setId(id);
 		return dto;
 	}
@@ -198,30 +198,40 @@ public class WebseriesDAOImpl implements WebseriesDAO {
 		}
 		return optional;
 	}
-	
-	/*@Override
-	public boolean saveAll(Collection<WebseriesDTO> collection) {
+
+	@Override
+	public void saveAll(Collection<WebseriesDTO> collection) {
 		Connection tempConnection = null;
-		boolean temp = false;
 		try (Connection connection = DriverManager.getConnection(URL, USERNAME, SECRET)) {
 			tempConnection = connection;
 			connection.setAutoCommit(false);
 
 			String query = "insert into webseries_table (w_name,w_noofepisodes,w_totalseason,w_streamedin,w_genre,w_yestageindanodbohudu)values(?,?,?,?,?,?)";
-			PreparedStatement prepare = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-			ResultSet result = prepare.getGeneratedKeys();
-			if (result.next()) {		
-				
-			} }catch (Exception e) {
-				e.printStackTrace();
+			PreparedStatement prepare = connection.prepareStatement(query);
+			collection.forEach((s) -> {
 				try {
-					tempConnection.rollback();
-				} catch (Exception e2) {
+					prepare.setString(1, s.getName());
+					prepare.setInt(2, s.getNoOfEpisodes());
+					prepare.setInt(3, s.getTotalSeason());
+					prepare.setString(4, s.getStreamedIn().toString());
+					prepare.setString(5, s.getGenre().toString());
+					prepare.setInt(6, s.getYestAgeIndaNodbohudu());
+					prepare.execute();
+					System.out.println("saved all:" + s);
+				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-			}
+			});
+			connection.commit();
 
-			
-		return temp;
-	}*/
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			try {
+				tempConnection.rollback();
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+
+	}
 }
