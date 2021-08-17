@@ -97,7 +97,10 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public void validateAndSaveAll(Collection<CustomerDTO> collection) {
-		dao.saveAll(collection);
+		if (!collection.isEmpty()) {
+			collection.forEach((d) -> this.validateAndSave(d));
+		}
+
 	}
 
 	@Override
@@ -107,7 +110,6 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Collection<CustomerDTO> findAll() {
-
 		return dao.findAll();
 	}
 

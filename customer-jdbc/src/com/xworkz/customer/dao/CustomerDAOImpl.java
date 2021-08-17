@@ -53,38 +53,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 	@Override
 	public void saveAll(Collection<CustomerDTO> collection) {
-		Connection tempConnection = null;
-		try (Connection connection = DriverManager.getConnection(URL, USERNAME, SECRET)) {
-			tempConnection = connection;
-			connection.setAutoCommit(false);
-			String query = "insert into customer_table(c_name,c_from,c_to,c_address,c_married,c_passportNo,c_education)values(?,?,?,?,?,?,?)";
-			PreparedStatement prepare = connection.prepareStatement(query);
-			collection.forEach((a) -> {
-				try {
-					prepare.setString(1, a.getName());
-					prepare.setString(2, a.getFrom());
-					prepare.setString(3, a.getTo());
-					prepare.setString(4, a.getAddress());
-					prepare.setBoolean(5, a.isMarried());
-					prepare.setString(6, a.getPassportNo());
-					prepare.setString(7, a.getEducation().toString());
-					prepare.execute();
-					System.out.println("saved all:" + a);
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			});
-
-			connection.commit();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			try {
-				tempConnection.rollback();
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-		}
+		collection.forEach((d)->this.save(d));
 	}
 
 	@Override
