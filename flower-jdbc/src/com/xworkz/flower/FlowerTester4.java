@@ -34,7 +34,7 @@ public class FlowerTester4 {
 
 			prepare.execute();
 
-			ResultSet result = prepare.getResultSet();
+			//ResultSet result = prepare.getResultSet();
 			connection.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
